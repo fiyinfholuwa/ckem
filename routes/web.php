@@ -25,6 +25,8 @@ use App\Http\Controllers\AuthController;
 Route::get('/redirect', [AuthController::class, 'check_login'])->middleware(['auth', 'verified'])->name('redirect');
 Route::get('/admin/dashboard', [AuthController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/branch/dashboard', [AuthController::class, 'branch_dashboard'])->middleware(['auth', 'verified'])->name('branch.dashboard');
+Route::get('logout', [AuthController::class, 'logout'])
+    ->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,32 +43,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/testimonial/delete/{id}', 'testimonial_delete')->name('testimonial.delete');
         Route::get('/admin/testimonial/edit/{id}', 'testimonial_edit')->name('testimonial.edit');
         Route::post('/admin/testimonial/update/{id}', 'testimonial_update')->name('testimonial.update');
-    });
-
-    Route::controller(AboutController::class)->group(function () {
-        Route::get('/about', 'about')->name('about');
-    });
-
-    Route::controller(ProjectController::class)->group(function () {
-        Route::get('/projects', 'project')->name('project');
-        Route::get('/admin/project/view', 'project_view')->name('project.view');
-        Route::get('/admin/project/all', 'project_all')->name('project.all');
-        Route::post('/admin/project/add', 'project_add')->name('project.add');
-        Route::post('/admin/project/delete/{id}', 'project_delete')->name('project.delete');
-        Route::get('/admin/project/edit/{id}', 'project_edit')->name('project.edit');
-        Route::post('/admin/project/update/{id}', 'project_update')->name('project.update');
-        Route::get('project/details/{id}', 'project_detail')->name('project.detail');
-    });
-
-    Route::controller(ProductController::class)->group(function () {
-        Route::get('/products', 'product')->name('product');
-        Route::get('/admin/product/view', 'product_view')->name('product.view');
-        Route::get('/admin/product/all', 'product_all')->name('product.all');
-        Route::post('/admin/product/add', 'product_add')->name('product.add');
-        Route::post('/admin/product/delete/{id}', 'product_delete')->name('product.delete');
-        Route::get('/admin/product/edit/{id}', 'product_edit')->name('product.edit');
-        Route::post('/admin/product/update/{id}', 'product_update')->name('product.update');
-        Route::get('product/details/{name}', 'product_detail')->name('product.detail');
     });
 
 
@@ -149,6 +125,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/admin/password/view/', 'admin_password_view')->name('admin.password.view');
         Route::post('/admin/password/change/', 'admin_password_change')->name('admin.password.change');
+
+        Route::post('/export/admin/members', 'export_admin_members')->name('admin.members.export');
+        Route::post('/export/admin/workers', 'export_admin_workers')->name('admin.workers.export');
+        Route::post('/export/admin/ordained', 'export_admin_ordained')->name('admin.ordained.export');
     });
 
     Route::controller(\App\Http\Controllers\BranchController::class)->group(function () {
@@ -179,7 +159,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/branch/password/view/', 'branch_password_view')->name('branch.password.view');
         Route::post('/branch/password/change/', 'branch_password_change')->name('branch.password.change');
 
-
+        Route::post('/export/branch/members', 'export_branch_members')->name('branch.members.export');
+        Route::post('/export/branch/workers', 'export_branch_workers')->name('branch.workers.export');
+        Route::post('/export/branch/ordained', 'export_branch_ordained')->name('branch.ordained.export');
 
     });
 

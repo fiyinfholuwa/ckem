@@ -6,10 +6,12 @@ use App\Models\ChurchMember;
 use App\Models\ChurchRequest;
 use App\Models\Testimonial;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class BranchController extends Controller
 {
@@ -323,6 +325,52 @@ class BranchController extends Controller
             return redirect()->back()->with($notification);
         }
 
+    }
+
+    public  function export_branch_members(){
+        ini_set('max_execution_time', 0);
+
+        $data = DB::table('church_members')->where('branch_id', '=', Auth::user()->id)->get();
+        $excelContent = "SN, Full Name, Phone Number,Email, Worker Status, Ordained Status\n"; // Header row
+        $i = 0;
+        foreach ($data as $item) {
+            $i++;
+            $excelContent .= $i . ','. $item->name . ',' . $item->phone . ',' . $item->email . ',' . $item->worker_status . ',' . $item->ordained_status . "\n";
+        }
+        header("Content-type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=all_members_export.csv");
+        echo $excelContent;
+        exit;
+    }
+
+    public  function export_branch_workers(){
+        ini_set('max_execution_time', 0);
+
+        $data = DB::table('church_members')->where('branch_id', '=', Auth::user()->id)->where('worker_status', '=', 'yes')->get();
+        $excelContent = "SN, Full Name, Phone Number,Email, Worker Status, Ordained Status\n"; // Header row
+        $i = 0;
+        foreach ($data as $item) {
+            $i++;
+            $excelContent .= $i . ','. $item->name . ',' . $item->phone . ',' . $item->email . ',' . $item->worker_status . ',' . $item->ordained_status . "\n";
+        }
+        header("Content-type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=all_workers_export.csv");
+        echo $excelContent;
+        exit;
+    }public  function export_branch_ordained(){
+        ini_set('max_execution_time', 0);
+
+        $data = DB::table('church_members')->where('branch_id', '=', Auth::user()->id)->where('ordained_status', '=', 'yes')->get();
+        $excelContent = "SN, Full Name, Phone Number,Email, Worker Status, Ordained Status\n"; // Header row
+        $i = 0;
+        foreach ($data as $item) {
+            $i++;
+            $excelContent .= $i . ','. $item->name . ',' . $item->phone . ',' . $item->email . ',' . $item->worker_status . ',' . $item->ordained_status . "\n";
+        }
+        header("Content-type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=all_ordained_export.csv");
+        echo $excelContent;
+        exit;
     }
 
 }

@@ -8,6 +8,15 @@
 							<div class="card">
 								<div class="card-header">
 									<h4 class="card-title">All Workers</h4>
+                                    <form method="post" action="{{route('admin.workers.export')}}">
+                                        @csrf
+                                        <div class="row">
+
+                                            <div class="col-lg-1 ml-0 col-4 mt-1" >
+                                                <button type="submit" class='btn btn-secondary btn-sm'>Export to CSV</button>
+                                            </div>
+                                        </div>
+                                    </form>
 								</div>
 								<div class="card-body">
 									<div class="table-responsive">

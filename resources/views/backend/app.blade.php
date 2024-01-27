@@ -117,10 +117,10 @@
 					</div>
 					<ul class="nav">
 
-						<li class=" {{ Route::currentRouteName() === 'dashboard' ? 'active' : '' }} nav-item active">
+						<li class="nav-item">
 							<a href="{{route('dashboard')}}">
 								<i class="fas fa-home"></i>
-								<p>Dashboard</p>
+								<p class="{{ request()->routeIs('dashboard')  ? 'text-warning' : '' }}">Dashboard</p>
 								<!-- <span class="badge badge-count">5</span> -->
 							</a>
 						</li>
@@ -128,7 +128,7 @@
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#base">
 								<i class="fas fa-tag"></i>
-								<p>Manage Post Category</p>
+								<p class="{{ request()->routeIs('category.view')   ? 'text-warning' : '' }}">Manage Post Category</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="base">
@@ -147,7 +147,7 @@
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#post">
 								<i class="fas fa-sticky-note"></i>
-								<p>Manage Posts</p>
+								<p class="{{ request()->routeIs('post.view') || request()->routeIs('post.all')  ? 'text-warning' : '' }}">Manage Posts</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="post">
@@ -171,7 +171,7 @@
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#project">
 								<i class="fa fa-user"></i>
-								<p>Manage Member</p>
+								<p class="{{ request()->routeIs('member.view') || request()->routeIs('member.all') || request()->routeIs('member.worker.all') || request()->routeIs('member.ordained.all')  ? 'text-warning' : '' }}">Manage Member</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="project">
@@ -207,7 +207,7 @@
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#product">
 								<i class="fas fa-users"></i>
-								<p>Manage Pastors</p>
+								<p class="{{ request()->routeIs('pastor.view') || request()->routeIs('pastor.all')  ? 'text-warning' : '' }}">Manage Pastors</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="product">
@@ -232,7 +232,7 @@
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#media">
                                 <i class="fa fa-microphone"></i>
-                                <p>Manage Media</p>
+                                <p class="{{ request()->routeIs('audio.view') || request()->routeIs('media.view')  ? 'text-warning' : '' }}">Manage Media</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse" id="media">
@@ -258,7 +258,7 @@
                     <li class="nav-item">
                             <a data-toggle="collapse" href="#admin_manager">
                                 <i class="fa fa-user-plus"></i>
-                                <p>Manage Admins</p>
+                                <p class="{{ request()->routeIs('role.view') || request()->routeIs('admin_manager.view')  ? 'text-warning' : '' }}">Manage Admins</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse" id="admin_manager">
@@ -285,7 +285,7 @@
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#branch">
                                 <i class="fas fa-church"></i>
-                                <p>Manage Church Branches</p>
+                                <p class="{{ request()->routeIs('branch.view') || request()->routeIs('branch.all')  ? 'text-warning' : '' }}">Manage Church Branches</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse" id="branch">
@@ -310,7 +310,7 @@
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#event">
                                 <i class="fa fa-calendar"></i>
-                                <p>Manage Special Events</p>
+                                <p class="{{ request()->routeIs('event.view') || request()->routeIs('event.all')  ? 'text-warning' : '' }}">Manage Special Events</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse" id="event">
@@ -327,7 +327,7 @@
                                     </li>
 
                                     <li>
-                                        <a href="{{route('product.all')}}">
+                                        <a href="">
                                             <span class="sub-item">All Attendees</span>
                                         </a>
                                     </li>
@@ -342,7 +342,7 @@
                         <li class="nav-item">
 							<a data-toggle="collapse" href="#testimonial">
 								<i class="fas fa fa-quote-left"></i>
-								<p>Manage Testimonials</p>
+								<p class="{{ request()->routeIs('testimonial.view') || request()->routeIs('testimonial.all')  ? 'text-warning' : '' }}">Manage Testimonials</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="testimonial">
@@ -367,7 +367,7 @@
                         <li class="nav-item">
                             <a href="{{route('contact.all')}}">
                                 <i class="fa fa-envelope"></i>
-                                <p>Messages</p>
+                                <p class=" {{ request()->routeIs('contact.all') ? 'text-warning' : '' }}">Messages</p>
 
                             </a>
                         </li>
@@ -377,7 +377,7 @@
 						<li class="nav-item">
 							<a href="{{route('comment.all')}}">
 							<i class="fa fa-comments"></i>
-								<p>Comments</p>
+								<p class=" {{ request()->routeIs('comment.all') ? 'text-warning' : '' }}">Comments</p>
 
 							</a>
 						</li>
@@ -387,7 +387,7 @@
                             <li class="nav-item">
                                 <a href="{{route('admin.request.all')}}">
                                     <i class="fa fa-paper-plane"></i>
-                                    <p>Manage Request</p>
+                                    <p class=" {{ request()->routeIs('admin.request.all') ? 'text-warning' : '' }}">Manage Request</p>
 
                                 </a>
                             </li>
@@ -397,7 +397,7 @@
 
                             <a href="{{ route('admin.password.view') }}">
                                 <i class="fas fa-lock"></i>
-                                <p class="">Change Password</p>
+                                <p class=" {{ request()->routeIs('admin.password.view') ? 'text-warning' : '' }}">Change Password</p>
                             </a>
 
                         </li>

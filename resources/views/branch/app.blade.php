@@ -76,7 +76,7 @@
 									<div class="user-box">
 
 										<div class="u-text">
-											<h3>{{Auth::user()->email}}</h3>
+											<h3>{{Auth::user()->name}}</h3>
 										</div>
 									</div>
 								</li>
@@ -106,7 +106,7 @@
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
 
-									<span class="user-level">Super Admin</span>
+									<span class="user-level">{{Auth::user()->name}}</span>
 									<span class="caret"></span>
 
 								</span>
@@ -119,7 +119,7 @@
                         <li class="nav-item">
 							<a href="{{route('branch.dashboard')}}">
 								<i class="fas fa-home"></i>
-								<p>Dashboard</p>
+								<p class="{{ request()->routeIs('branch.dashboard') ? 'text-warning' : '' }}">Dashboard</p>
 								<!-- <span class="badge badge-count">5</span> -->
 							</a>
 						</li>
@@ -128,7 +128,7 @@
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#project">
 								<i class="fa fa-user"></i>
-								<p>Manage Member</p>
+								<p class="{{ request()->routeIs('branch.member.view') || request()->routeIs('branch.member.all') || request()->routeIs('branch.member.worker.all') || request()->routeIs('branch.member.ordained.all') ? 'text-warning' : '' }}">Manage Member</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="project">
@@ -165,7 +165,7 @@
                         <li class="nav-item">
 							<a data-toggle="collapse" href="#testimonial">
 								<i class="fas fa fa-quote-left"></i>
-								<p>Manage Testimonials</p>
+								<p class="{{ request()->routeIs('branch.testimonial.view') || request()->routeIs('branch.testimonial.all')  ? 'text-warning' : '' }}">Manage Testimonials</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="testimonial">
@@ -188,7 +188,7 @@
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#request">
                                 <i class="fa fa-paper-plane"></i>
-                                <p>Manage Request</p>
+                                <p class="{{ request()->routeIs('branch.request.view') || request()->routeIs('branch.request.all')  ? 'text-warning' : '' }}">Manage Request</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse" id="request">
@@ -209,11 +209,11 @@
                         </li>
 
 
-                        <li class="nav-item">
+                        <li class="nav-item ">
 
                             <a href="{{ route('branch.password.view') }}">
                                 <i class="fas fa-lock"></i>
-                                <p class="">Change Password</p>
+                                <p class=" {{ request()->routeIs('branch.password.view') ? 'text-warning' : '' }}">Change Password</p>
                             </a>
 
                         </li>
