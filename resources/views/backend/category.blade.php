@@ -6,7 +6,7 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Add Category</div>
+                            <div class="card-title">Edit Category</div>
                         </div>
                         <div class="card-body">
                            <form action="{{route('category.add')}}" method="post">
@@ -19,17 +19,17 @@
                                 {{$message}}
                                 @enderror
                                 </small>
-                               
+
                             </div>
-                        
+
                         </div>
                         <div class="card-action">
-                            <button class="btn btn-primary">Add Category</button>
-                
+                            <button class="btn btn-primary">Update Category</button>
+
                         </div>
                            </form>
                     </div>
-                    
+
                 </div>
 
                 <div class="col-md-8">
@@ -49,23 +49,23 @@
 													<th>Action</th>
 												</tr>
 											</thead>
-											
+
                                             <tbody>
                                             <?php $i = 1; ?>
 											@if(isset($categories))
                                             @foreach($categories as $category)
-                                           
+
 											<tr>
                                             <td>{{$i++;}}</td>
                                                 <td>{{$category->name}}</td>
-                                                
+
                                                 <td>
-                                                <a href="{{route('category.edit', $category->id)}}" ><i style="color:blue;" class="fa fa-edit"></i></a>    
+                                                <a href="{{route('category.edit', $category->id)}}" ><i style="color:blue;" class="fa fa-edit"></i></a>
                                                 <a href="#" data-toggle="modal" data-target="#category_{{$category->id}}" ><i style="color:red;" class="fa fa-trash"></i></a>
                                                 </td>
                                                 @include('backend.modals.deleteCategory')
 											</tr>
-											
+
                                             @endforeach
                                             @endif
                                             </tbody>
@@ -76,7 +76,7 @@
 						</div>
 
 					</div>
-                    
+
                 </div>
             </div>
 

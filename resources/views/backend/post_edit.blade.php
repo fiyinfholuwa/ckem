@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="email2">Post Content</label>
-                                <textarea rows="10" type="text" class="form-control" id="email2" required name="content" placeholder="Enter Post Content">{{$post->content}}</textarea>
+                                <textarea id="myTextarea" rows="10" type="text" class="form-control" id="email2" required name="content" placeholder="Enter Post Content">{{$post->content}}</textarea>
                                 <small style="color:red; font-weight:500">
                                 @error('content')
                                 {{$message}}

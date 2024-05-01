@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\RegisterationEmail;
 use App\Mail\RegisterationMail;
 use App\Models\AdminRole;
+use App\Models\AttendanceChurch;
 use App\Models\ChurchMember;
 use App\Models\ChurchRequest;
 use App\Models\Contact;
@@ -18,9 +19,14 @@ use Illuminate\Support\Facades\DB;
 use Mail;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\Attendance;
+use Carbon\Carbon;
 class AdminController extends Controller
 {
+
+    public function index(){
+        return view('welcome');
+    }
     public function testimonial_view(){
         return view('backend.testimonial_view');
     }
@@ -145,6 +151,10 @@ class AdminController extends Controller
     public function get_all_message(){
         $all_messages = Contact::all();
         return view('backend.contacts', compact('all_messages'));
+    }
+    public function get_all_payment(){
+        $all_payments = DB::table('payment')->where('status', '=', 'paid')->get();
+        return view('backend.payments', compact('all_payments'));
     }
 
     public function message_delete($id){
@@ -585,6 +595,23 @@ public function pastor_view(){
     }
 
 
+    public function admin_event_attendance(){
+        $all_events = SpecialEvent::all();
+        $events = Attendance::all();
+        return view('backend.attendance_all', compact('events', 'all_events'));
+    }
+
+    public function event_attendance_delete($id){
+
+        $delete_att =  Attendance::findOrFail($id);
+        $delete_att->delete();
+        $notification = array(
+            'message' => 'Participant Successfully deleted',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
 
     public function admin_manager_view(){
         $roles = AdminRole::all();
@@ -785,6 +812,87 @@ public function pastor_view(){
     echo $excelContent;
     exit;
 }
+
+
+
+public function attendance_event_report(Request $request){
+    ini_set('max_execution_time', 0);
+
+    $dateFrom = Carbon::createFromFormat('Y-m-d', $request->date_from)->startOfDay();
+    $dateTo = Carbon::createFromFormat('Y-m-d', $request->date_to)->endOfDay();
+    $type = $request->type;
+     $query = DB::table('attendances')
+        ->whereBetween('created_at', [$dateFrom, $dateTo]);
+
+    if (!empty($type)) {
+        $query->where('event_name', $type);
+    }
+
+    $data = $query->get();
+
+    $excelContent = "SN, Full Name, Event Name, Date of Birth, Phone,Email,Address, Has Attended Before, Hear About Us, Group Belong, Occupated, Date Created\n"; // Header row
+    $i = 0;
+
+    foreach ($data as $item) {
+        $i++;
+        $event_name = SpecialEvent::where('id', $item->event_name)->first();
+        $excelContent .= "$i, {$item->full_name}, {$event_name->title}, {$item->dob},{$item->phone},{$item->email},{$item->address}, {$item->attend_before},{$item->hear_about}, {$item->group}, {$item->occupation},{$item->created_at}\n";
+    }
+    $headers = array(
+        "Content-type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=event_attendance_report.csv",
+        "Pragma" => "no-cache",
+        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0"
+    );
+    return response()->stream(
+        function () use ($excelContent) {
+            echo $excelContent;
+        },
+        200,
+        $headers
+    );
+
+}
+public function attendance_church_report(Request $request){
+    ini_set('max_execution_time', 0);
+
+    $dateFrom = Carbon::createFromFormat('Y-m-d', $request->date_from)->startOfDay();
+    $dateTo = Carbon::createFromFormat('Y-m-d', $request->date_to)->endOfDay();
+    $type = $request->type;
+     $query = DB::table('attendance_churches')
+        ->whereBetween('created_at', [$dateFrom, $dateTo]);
+
+    $data = $query->get();
+
+    $excelContent = "SN, Activity Name, Number of Male, Number of Female, Number of Children,Activity Date, Date Created\n"; // Header row
+    $i = 0;
+
+    foreach ($data as $item) {
+
+        $excelContent .= "$i, {$item->activity},{$item->male},{$item->female},{$item->children},{$item->the_date},{$item->created_at}\n";
+    }
+    $headers = array(
+        "Content-type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=church_attendance_report.csv",
+        "Pragma" => "no-cache",
+        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0"
+    );
+    return response()->stream(
+        function () use ($excelContent) {
+            echo $excelContent;
+        },
+        200,
+        $headers
+    );
+
+}
+    public function admin_attendance_all(){
+        $attendances = AttendanceChurch::all();
+        return view('backend.attendance_church_all', compact('attendances'));
+    }
+
 
 
 }

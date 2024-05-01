@@ -28,8 +28,8 @@ class AuthController extends Controller
 
     public function check_login(){
         if (Auth::id()) {
-            if (Auth::user()->user_type=='0') {
-                return redirect()->route('home');
+            if (Auth::user()->user_type=='2') {
+                return redirect()->route('branch.dashboard');
             }elseif(Auth::user()->user_type=='3'){
              return redirect()->route('dashboard');
             }elseif(Auth::user()->user_type=='2'){

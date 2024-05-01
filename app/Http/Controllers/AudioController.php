@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 use App\Models\Audio;
+use Illuminate\Support\Facades\File;
 use App\Models\MediaLink;
 
 
@@ -12,7 +14,40 @@ class AudioController extends Controller
 {
     public function audio_view()
     {
-        return view('backend.audio_view');
+        $audios = Audio::all();
+        return view('backend.audio_view', compact('audios'));
+    }
+    public function audio_edit($id)
+    {
+        $audio = Audio::findOrFail($id);
+        $audios = Audio::all();
+        return view('backend.audio_edit', compact('audios', 'audio'));
+    }
+    public function audio_all()
+    {
+        $audios = Audio::all();
+        return view('backend.audio_all', compact('audios'));
+    }
+
+    public function audio_delete($id){
+        $audio =  Audio::findOrFail($id);
+        $filePath = $audio->image;
+        File::delete(public_path($filePath));
+        $audio->delete();
+        $notification = array(
+            'message' => 'Audio Successfully Deleted',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+    public function message_delete($id){
+        $contact =  Contact::findOrFail($id);
+        $contact->delete();
+        $notification = array(
+            'message' => 'Contact Successfully Deleted',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
     }
 
     public function audio_add(Request $request){
@@ -20,10 +55,9 @@ class AudioController extends Controller
             'title' => 'required',
             'preacher' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'file' => 'required|mimes:mp3',
+            'link' => 'required',
         ]);
         $audio = new Audio;
-
         $image = $request->file('image');
         $extension = $image->getClientOriginalExtension();
         $filename = time() . '.' . $extension;
@@ -34,24 +68,8 @@ class AudioController extends Controller
         $image->move($directory, $filename);
         $image_path = $directory . $filename;
 
-//        $file = $request->file('file');
-//        $extension = $file->getClientOriginalExtension();
-//        $filename = time() . '.' . $extension;
-//        $directory = 'uploads/audio/file/';
-//        if (!file_exists($directory)) {
-//            mkdir($directory, 0755, true);
-//        }
-//        $file->move($directory, $filename);
-//        $audio_path = $directory . $filename;
-
-        $file = $request->file('file');
-        $timestamp = now()->timestamp; // Using Laravel's now() helper function
-        $filename = $timestamp . '_' . $file->getClientOriginalName();
-        $file->storeAs('uploads/audio/file', $filename, 'public');
-        $audio_path = 'uploads/audio/file/' . $filename;
-
         $audio->image = $image_path;
-        $audio->file  = $audio_path;
+        $audio->file  = $request->link;
         $audio->title = $request->title;
         $audio->preacher = $request->preacher;
         $audio->save();
@@ -60,6 +78,40 @@ class AudioController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
+    }
+
+
+    public function audio_update(Request $request, $id){
+        $request->validate([
+            'title' => 'required',
+            'preacher' => 'required',
+            'link' => 'required',
+        ]);
+        $audio = Audio::findOrFail($id);
+        if ($request->has('image')){
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $directory = 'uploads/audio/image/';
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+            }
+            $image->move($directory, $filename);
+            $image_path = $directory . $filename;
+
+        }else{
+            $image_path =$audio->image;
+        }
+        $audio->image = $image_path;
+        $audio->file  = $request->link;
+        $audio->title = $request->title;
+        $audio->preacher = $request->preacher;
+        $audio->save();
+        $notification = array(
+            'message' => 'Audio Successfully updated',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('audio.all')->with($notification);
     }
 
 

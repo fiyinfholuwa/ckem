@@ -232,14 +232,19 @@
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#media">
                                 <i class="fa fa-microphone"></i>
-                                <p class="{{ request()->routeIs('audio.view') || request()->routeIs('media.view')  ? 'text-warning' : '' }}">Manage Media</p>
+                                <p class="{{ request()->routeIs('audio.view') || request()->routeIs('media.view') || request()->routeIs('audio.all')  ? 'text-warning' : '' }}">Manage Media</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse" id="media">
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <a href="{{route('audio.view')}}">
-                                            <span class="sub-item">Manage Audio</span>
+                                            <span class="sub-item">Add Audio</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('audio.all')}}">
+                                            <span class="sub-item">All Audios</span>
                                         </a>
                                     </li>
                                     <li>
@@ -317,17 +322,17 @@
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <a href="{{route('event.view')}}">
-                                            <span class="sub-item">Add Event</span>
+                                            <span class="sub-item">Add Upcoming Event</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{route('event.all')}}">
-                                            <span class="sub-item">All Events</span>
+                                            <span class="sub-item">All Upcoming Events</span>
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="">
+                                        <a href="{{route('admin.event.attendance')}}">
                                             <span class="sub-item">All Attendees</span>
                                         </a>
                                     </li>
@@ -373,6 +378,16 @@
                         </li>
                         @endif
 
+                        @if(in_array('manage_messages', $permissions) || Auth::user()->user_type== 3)
+                        <li class="nav-item">
+                            <a href="{{route('payment.all')}}">
+                                <i class="fa fa-credit-card"></i>
+                                <p class=" {{ request()->routeIs('payment.all') ? 'text-warning' : '' }}">All Payments</p>
+
+                            </a>
+                        </li>
+                        @endif
+
                         @if(in_array('manage_comments', $permissions) || Auth::user()->user_type== 3)
 						<li class="nav-item">
 							<a href="{{route('comment.all')}}">
@@ -393,6 +408,14 @@
                             </li>
                         @endif
 
+                        <li class="nav-item">
+
+                            <a href="{{ route('admin.attendance.all') }}">
+                                <i class="fas fa-lock"></i>
+                                <p class=" {{ request()->routeIs('admin.attendance.all') ? 'text-warning' : '' }}">Church Attendances</p>
+                            </a>
+
+                        </li>
                         <li class="nav-item">
 
                             <a href="{{ route('admin.password.view') }}">
@@ -530,6 +553,16 @@
  }
  @endif
 
+</script>
+
+<!-- <script src="tinymce/tinymce.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js"></script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/jquery.tinymce.min.js"></script> -->
+<script>
+    tinymce.init({
+        selector: '#myTextarea'
+    });
 </script>
 
 

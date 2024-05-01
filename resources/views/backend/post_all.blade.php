@@ -17,7 +17,6 @@
 													<th>S/N</th>
 													<th>Title</th>
                                                     <th>Category</th>
-                                                    <th>Content</th>
                                                     <th>Image</th>
 													<th>Action</th>
 												</tr>
@@ -31,8 +30,7 @@
 												<td>{{$i++}}</td>
                                                 <td>{{$post->title}}</td>
                                                 <td>{{optional($post->cat)->name}}</td>
-                                                <td>{!!Str::limit(html_entity_decode($post->content),20,"...")!!}</td>
-
+                                                
                                                 <td><img height="40" width="40" src="{{asset($post->image)}}" /></td>
                                                 <td>
                                                 <a href="{{route('post.edit', $post->id)}}" ><i style="color:blue;" class="fa fa-edit"></i></a>

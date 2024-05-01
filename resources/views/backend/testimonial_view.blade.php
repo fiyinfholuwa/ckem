@@ -19,7 +19,7 @@
                                 {{$message}}
                                 @enderror
                                 </small>
-                               
+
                             </div>
                             <div class="form-group">
                                 <label for="email2">Testimonial Content</label>
@@ -29,7 +29,7 @@
                                 {{$message}}
                                 @enderror
                                 </small>
-                               
+
                             </div>
                             <div class="form-group">
                                 <label for="email2">Testimonial Designation</label>
@@ -39,7 +39,7 @@
                                 {{$message}}
                                 @enderror
                                 </small>
-                               
+
                             </div>
 
                             <div class="form-group">
@@ -50,19 +50,19 @@
                                 {{$message}}
                                 @enderror
                                 </small>
-                               
+
                             </div>
-                        
+
                         </div>
-                        <div class="card-action">
-                            <button class="btn btn-primary">Add Testimonial</button>
-                
+                        <div  class="card-action">
+                            <button style="margin-left: 20px;" class="btn btn-primary">Save</button>
+
                         </div>
                            </form>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
 
 @endsection

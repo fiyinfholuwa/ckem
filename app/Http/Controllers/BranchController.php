@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AttendanceChurch;
 use App\Models\ChurchMember;
 use App\Models\ChurchRequest;
 use App\Models\Testimonial;
@@ -218,6 +219,10 @@ class BranchController extends Controller
     {
         return view('branch.request_view');
     }
+    public function branch_attendance_view()
+    {
+        return view('branch.attendance_view');
+    }
 
     public function branch_request_add(Request $request)
     {
@@ -238,11 +243,65 @@ class BranchController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+    public function branch_attendance_add(Request $request)
+    {
+        $request->validate([
+            'male' => 'required',
+            'female' => 'required',
+            'children' => 'required',
+            'the_date' => 'required',
+            'activity' => 'required',
+        ]);
+
+        $church_attendance = new AttendanceChurch;
+        $church_attendance->male = $request->male;
+        $church_attendance->female = $request->female;
+        $church_attendance->children = $request->children;
+        $church_attendance->the_date = $request->the_date;
+        $church_attendance->activity = $request->activity;
+        $church_attendance->branch_id = Auth::user()->id;
+        $church_attendance->save();
+        $notification = array(
+            'message' => 'Attendance Successfully added',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
+    public function branch_attendance_Update(Request $request, $id)
+    {
+        $request->validate([
+            'male' => 'required',
+            'female' => 'required',
+            'children' => 'required',
+            'the_date' => 'required',
+            'activity' => 'required',
+        ]);
+
+        $church_attendance = AttendanceChurch::findOrFail($id);
+        $church_attendance->male = $request->male;
+        $church_attendance->female = $request->female;
+        $church_attendance->children = $request->children;
+        $church_attendance->the_date = $request->the_date;
+        $church_attendance->activity = $request->activity;
+        $church_attendance->branch_id = Auth::user()->id;
+        $church_attendance->save();
+        $notification = array(
+            'message' => 'Attendance Successfully updated',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('branch.attendance.all')->with($notification);
+    }
 
     public function branch_request_all()
     {
         $requests = ChurchRequest::where('user_id', '=', Auth::user()->id)->get();
         return view('branch.request_all', compact('requests'));
+    }
+    public function branch_attendance_all()
+    {
+        $attendances = AttendanceChurch::where('branch_id', '=', Auth::user()->id)->get();
+        return view('branch.attendance_all', compact('attendances'));
     }
 
     public function branch_request_delete($id)
@@ -262,6 +321,16 @@ class BranchController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+    public function branch_attendance_delete($id)
+    {
+        $church_attendance = AttendanceChurch::findOrFail($id);
+        $church_attendance->delete();
+        $notification = array(
+            'message' => 'Church Successfully Deleted',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
 
     public function branch_request_edit($id)
     {
@@ -274,6 +343,12 @@ class BranchController extends Controller
             return redirect()->back()->with($notification);
         }
         return view('branch.request_edit', compact('request'));
+    }
+    public function branch_attendance_edit($id)
+    {
+        $attendance = AttendanceChurch::findOrFail($id);
+
+        return view('branch.attendance_edit', compact('attendance'));
     }
 
     public function branch_request_update(Request $request, $id)

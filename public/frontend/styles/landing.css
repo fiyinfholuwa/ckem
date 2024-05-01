@@ -1,0 +1,407 @@
+@import '/frontend/styles/main.css';
+
+.nav-container{
+    position: relative;
+    display: flex;
+    gap: 25px;
+    
+}
+.banner h1{
+    text-align: center;
+}
+.swiper {
+    width: 600px;
+    height: 300px;
+  }
+
+.testimony-swiper {
+    width: 300px;
+  }
+
+
+  @media screen and (max-width:768px) {
+    .swiper{
+        width: 100%;
+    }
+  }
+
+.header{
+    backdrop-filter: blur(10px);
+    background-color: #2f2f2c;
+    -webkit-backdrop-filter: blur(10px);
+    opacity: .9
+}
+
+
+.nav-container .active{
+    color: var(--yellow);
+    font-weight: 600;
+    border-bottom: 2px solid var(--yellow);
+}
+
+@media screen and (max-width:768px) {
+
+    #sidebar{
+        transform: translateX(-800px);
+        transition: all .5s ease-in-out ;
+    }
+
+    .nav-container{
+        position: absolute;
+        border-radius: 20px;
+        left: 5%;
+        top: 10vh;
+        height: 90vh;
+        width: 90%;
+        padding: 1.5rem;
+        background-color: #fff;
+        flex-direction: column;
+        align-items: center;
+
+    }
+    .nav-container li a{
+        color: var(--blac);
+        margin: 2rem 0;
+        width: 100%;
+        font-weight: 500;
+    }
+
+    .nav-container .active{
+        color: var(--scarlet);
+        border-bottom: 2px solid var(--scarlet);
+    }
+}
+
+#salvation{
+    background-image: url('./frontend/assets/img/hero1.avif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 60vh;
+    position: relative;
+    z-index: -1;
+    /* animation: change 20s infinite ease-in-out; */
+}
+.hero{
+    background-image: url('./frontend/assets/img/church2.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: -1;
+    animation: change 30s infinite ease-in-out;
+}
+
+@media screen and (max-width:768px) {
+    .hero{
+        height: 85vh;
+    }
+}
+
+@keyframes change{
+    0%{
+      background-image: url(/frontend/assets/img/header.jpg);
+    }
+    30%{
+      background-image: url(/frontend/assets/img/header2.jpg);
+    }
+    60%{
+      background-image: url(/frontend/assets/img/header5.jpg);
+    }
+    80%{
+      background-image: url(/frontend/assets/img/header3.jpg);
+    }
+    100%{
+      background-image: url(/frontend/assets/img/header4.jpg);
+    }
+  
+  } 
+
+   .hero-content-container .box{
+    color:#fff;
+    background-color: transparent;
+    display: inline-block;
+    display: none;
+}
+   .hero-content-container .box.text-in{
+	display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+	animation: textIn .5s ease;
+}
+ .hero-content-container .box.text-out{
+	animation: textOut .5s ease;
+}
+
+@keyframes textIn{
+	0%{
+		/* transform: translateY(100%); */
+        opacity: 1;
+	}
+	25%{
+		/* transform: translateY(100%); */
+        opacity: 0.75;
+	}
+	50%{
+		/* transform: translateY(100%); */
+        opacity: 0.50;
+	}
+	75%{
+		/* transform: translateY(100%); */
+        opacity: 0.25;
+	}
+	100%{
+		/* transform: translateY(0%); */
+        opacity: 0;
+	}
+}
+@keyframes textOut{
+	0%{
+		/* transform: translateY(100%); */
+        opacity: 0;
+	}
+	25%{
+		/* transform: translateY(100%); */
+        opacity: 0.25;
+	}
+	50%{
+		/* transform: translateY(100%); */
+        opacity: 0.50;
+	}
+	75%{
+		/* transform: translateY(100%); */
+        opacity: 0.75;
+	}
+	100%{
+		/* transform: translateY(0%); */
+        opacity: 1;
+	}
+}
+
+
+
+.hero-content{
+    /* z-index: ; */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-icon{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 20px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+   
+
+}
+
+.social-icon a i{
+    color: #fff;
+    opacity: .8;
+}
+.social-icon a i:hover{
+    opacity: 1;
+}
+
+.pastor-socials a{
+    background-color: var(--scarlet);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.pastor-card{
+    width: 100%;
+    height: 350px;
+}
+
+.pastor-social-icon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.pastor-social-icon a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+    border: 1px solid var(--graz);
+    color: var(--graz);
+    transition: all .3s ease-in-out;
+}
+.pastor-social-icon a:hover{
+    background-color: var(--blac);
+    color: white;
+}
+
+
+.sermon-card{
+    width: 100%;
+    height: 420px;
+}
+
+.sermon-img{
+    height: 85%;
+    position: relative;
+}
+.sermon-overlay{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95%;
+    width: 95%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.sermon-overlay button{
+    width: 40%;
+    padding: 6px 0;
+    transition: all .3s ease-in-out;
+    font-weight: 500;
+    color: #fff;
+}
+.sermon-overlay button:hover{
+    background-color: var(--blac);
+    color: var(--graz);
+    border-radius: 4px;
+    border: 1px solid var(--graz);
+}
+
+
+.blog-card{
+    width: 100%;
+    height: 350px;
+}
+
+.blog-img{
+    height: 68%;
+    position: relative;
+}
+.blog-img button{
+    border-top-left-radius: 20px ;
+    color: #fff;
+    font-weight: 600;
+}
+
+.sermon-overlay button{
+    width: 40%;
+    padding: 6px 0;
+    transition: all .3s ease-in-out;
+    font-weight: 500;
+    color: #fff;
+}
+.sermon-overlay button:hover{
+    background-color: var(--blac);
+    color: var(--graz);
+    border-radius: 4px;
+    border: 1px solid var(--graz);
+}
+
+
+
+.event-card{
+    width: 100%;
+    height: 250px;
+    border-radius: 16px;
+}
+
+.event-img{
+    height: 100%;
+    position: relative;
+    border-radius: 16px;
+}
+.event-img img{
+    border-radius: 16px;
+}
+
+.event-overlay{
+    border-radius: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.special-event-card{
+    width: 100%;
+    height: 350px;
+    border-radius: 16px;
+}
+
+.special-event-img{
+    height: 100%;
+    position: relative;
+    border-radius: 16px;
+}
+.special-event-img img{
+    border-radius: 16px;
+}
+
+.special-event-overlay{
+    border-radius: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: all .5s ease-in-out;
+}
+
+.special-event-overlay h1, .special-event-overlay p, .special-event-overlay a, .special-event-overlay button{
+    display: none;
+}
+
+.special-event-card:hover .special-event-overlay{
+    height:100%;
+} 
+.special-event-card:hover .special-event-overlay h1, .special-event-card:hover .special-event-overlay p,.special-event-card:hover .special-event-overlay a,.special-event-card:hover .special-event-overlay button{
+    display: block;
+}
+
+
+.donate-card{
+    width: 100%;
+    height: 350px;
+}
+
+.donate-img{
+    height: 45%;
+    position: relative;
+}
+.donate-img button{
+    /* border-top-left-radius: 20px ; */
+    color: #fff;
+    font-weight: 600;
+}

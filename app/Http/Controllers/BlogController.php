@@ -81,10 +81,12 @@ class BlogController extends Controller
 
     public function post_add(Request $request){
         $request->validate([
+
             'title' => 'required',
-            'content' => 'required'
+            'body' => 'required'
         ]);
 
+    
         $url_slug = strtolower($request->title);
         $label_slug= preg_replace('/\s+/', '-', $url_slug);
 
@@ -103,7 +105,7 @@ class BlogController extends Controller
         $new_post->author = "Admin";
         $new_post->post_url = $label_slug;
         $new_post->category = $request->category;
-        $new_post->content = $request->content;
+        $new_post->content = $request->body;
         $new_post->image = $path;
         $new_post->save();
         $notification = array(

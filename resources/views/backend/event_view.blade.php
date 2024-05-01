@@ -24,7 +24,7 @@
 
                             <div class="form-group">
                                 <label for="email2">Event Content</label>
-                                <textarea rows="10" type="text" class="form-control" value="{{old('body')}}" id="email2" required name="body" placeholder="Enter Event Content"></textarea>
+                                <textarea id="myTextarea" rows="10" type="text" class="form-control" value="{{old('body')}}" id="email2" required name="body" placeholder="Enter Event Content"></textarea>
                                 <small style="color:red; font-weight:500">
                                 @error('body')
                                 {{$message}}

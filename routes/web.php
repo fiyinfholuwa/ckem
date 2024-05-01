@@ -4,8 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\ProductController;
+// use App\Http\Controllers\ProjectController;
+// use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AuthController;
@@ -34,9 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('home');
+
 Route::middleware('auth')->group(function () {
     Route::controller(\App\Http\Controllers\AdminController::class)->group(function () {
-        Route::get('/', 'index')->name('home');
+
         Route::get('/admin/testimonial/view', 'testimonial_view')->name('testimonial.view');
         Route::get('/admin/testimonial/all', 'testimonial_all')->name('testimonial.all');
         Route::post('/admin/testimonial/add', 'testimonial_add')->name('testimonial.add');
@@ -72,6 +74,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/contact/all', 'get_all_message')->name('contact.all');
         Route::post('/admin/contact/delete/{id}', 'message_delete')->name('contact.delete');
         Route::get('/admin/contact/all', 'get_all_message')->name('contact.all');
+        Route::get('/admin/payment/all', 'get_all_payment')->name('payment.all');
 
         Route::get('/admin/branch/view', 'branch_view')->name('branch.view');
         Route::post('/admin/branch/add', 'branch_add')->name('branch.add');
@@ -126,9 +129,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/password/view/', 'admin_password_view')->name('admin.password.view');
         Route::post('/admin/password/change/', 'admin_password_change')->name('admin.password.change');
 
+        Route::get('/admin/event/attendance/', 'admin_event_attendance')->name('admin.event.attendance');
+
+        Route::post('/admin/event/attendance/delete/{id}', 'event_attendance_delete')->name('event.attendance.delete');
+
+        Route::get('/admin/attendance/all', 'admin_attendance_all')->name('admin.attendance.all');
+
         Route::post('/export/admin/members', 'export_admin_members')->name('admin.members.export');
         Route::post('/export/admin/workers', 'export_admin_workers')->name('admin.workers.export');
         Route::post('/export/admin/ordained', 'export_admin_ordained')->name('admin.ordained.export');
+
+        Route::post('/export/event/attendance', 'attendance_event_report')->name('attendance.event.report');
+        Route::post('/export/church/attendance', 'attendance_church_report')->name('attendance.church.report');
     });
 
     Route::controller(\App\Http\Controllers\BranchController::class)->group(function () {
@@ -149,12 +161,21 @@ Route::middleware('auth')->group(function () {
         Route::get('/branch/testimonial/edit/{id}', 'branch_testimonial_edit')->name('branch.testimonial.edit');
         Route::post('/branch/testimonial/update/{id}', 'branch_testimonial_update')->name('branch.testimonial.update');
 
+        Route::get('/branch/attendance/view', 'branch_attendance_view')->name('branch.attendance.view');
+        Route::get('/branch/attendance/all', 'branch_attendance_all')->name('branch.attendance.all');
+        Route::post('/branch/attendance/add', 'branch_attendance_add')->name('branch.attendance.add');
+        Route::post('/branch/attendance/delete/{id}', 'branch_attendance_delete')->name('branch.attendance.delete');
+        Route::get('/branch/attendance/edit/{id}', 'branch_attendance_edit')->name('branch.attendance.edit');
+        Route::post('/branch/attendance/update/{id}', 'branch_attendance_update')->name('branch.attendance.update');
+
+
         Route::get('/branch/request/view', 'branch_request_view')->name('branch.request.view');
         Route::get('/branch/request/all', 'branch_request_all')->name('branch.request.all');
         Route::post('/branch/request/add', 'branch_request_add')->name('branch.request.add');
         Route::post('/branch/request/delete/{id}', 'branch_request_delete')->name('branch.request.delete');
         Route::get('/branch/request/edit/{id}', 'branch_request_edit')->name('branch.request.edit');
         Route::post('/branch/request/update/{id}', 'branch_request_update')->name('branch.request.update');
+
 
         Route::get('/branch/password/view/', 'branch_password_view')->name('branch.password.view');
         Route::post('/branch/password/change/', 'branch_password_change')->name('branch.password.change');
@@ -168,6 +189,10 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(\App\Http\Controllers\AudioController::class)->group(function () {
         Route::get('/admin/audio/view', 'audio_view')->name('audio.view');
+        Route::get('/admin/audio/edit/{id}', 'audio_edit')->name('audio.edit');
+        Route::post('/admin/audio/delete/{id}', 'audio_delete')->name('audio.delete');
+        Route::get('/admin/audio/all', 'audio_all')->name('audio.all');
+        Route::post('/admin/audio/update/{id}', 'audio_update')->name('audio.update');
         Route::post('/admin/audio/add', 'audio_add')->name('audio.add');
         Route::post('/admin/contact/delete/{id}', 'message_delete')->name('contact.delete');
         Route::get('/admin/media/view', 'media_view')->name('media.view');
@@ -177,4 +202,24 @@ Route::middleware('auth')->group(function () {
 
 
 });
+
+
+Route::controller(\App\Http\Controllers\FrontendController::class)->group(function () {
+    Route::get('/', 'home')->name('home');
+    Route::get('/about', 'about')->name('about');
+    Route::get('/contact', 'contact')->name('contact');
+    Route::get('/sermons', 'sermons')->name('sermons');
+    Route::get('/events', 'events')->name('events');
+    Route::get('/donation', 'donation')->name('donation');
+    Route::get('/media', 'media')->name('media');
+    Route::get('/blog', 'blog')->name('blog');
+    c
+    Route::get('/event/details/{id}', 'event_detail')->name('event.detail');
+    Route::get('/blog/details/{id}', 'blog_detail')->name('blog.detail');
+    Route::post('/event/attendance/save', 'attendance_event_save')->name('attendance.event.save');
+    Route::post('/comment/add', 'comment_add')->name('comment.save');
+    Route::post('/pay', 'makePayment')->name('pay');
+    Route::get('/payment/callback', 'paymentCallback')->name('pay.callback');
+});
+
 require __DIR__.'/auth.php';

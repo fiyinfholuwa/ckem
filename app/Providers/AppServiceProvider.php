@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\AdminRole;
+use App\Models\MediaLink;
 use Illuminate\Support\ServiceProvider;
 use Auth;
 class AppServiceProvider extends ServiceProvider
@@ -20,7 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         view()->composer('*', function ($view) {
+            $view->with('media_link', MediaLink::first());
             if (Auth::check()) {
                 $user_role = Auth::user()->user_role;
                 $permission = null;
@@ -28,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
                     $permission = AdminRole::where('id', $user_role)->first();
                     $permissions = json_decode($permission->permission, true);
                     $view->with('permissions', $permissions);
+                }else{
+                    $permissions = [];
+                    $view->with('permissions', $permissions);
+                    // $view->with('permissions', []);
                 }
 
             }

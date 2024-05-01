@@ -208,6 +208,29 @@
                             </div>
                         </li>
 
+                        <li class="nav-item">
+                            <a data-toggle="collapse" href="#attendance">
+                                <i class="fa fa-paper-plane"></i>
+                                <p class="{{ request()->routeIs('branch.attendance.view') || request()->routeIs('branch.attendance.all')  ? 'text-warning' : '' }}">Manage Attendance</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="attendance">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="{{route('branch.attendance.view')}}">
+                                            <span class="sub-item">Add Attendance</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('branch.attendance.all')}}">
+                                            <span class="sub-item">All Attendances</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+
 
                         <li class="nav-item ">
 

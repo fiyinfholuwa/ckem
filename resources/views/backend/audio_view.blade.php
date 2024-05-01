@@ -2,8 +2,8 @@
 
 @section('content')
 
-            <div class="row" style="margin:10px">
-                <div class="col-lg-5">
+            <div class="row" style="margin: 10px">
+                <div class="col-lg-8">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">Add Audio Message</div>
@@ -23,10 +23,10 @@
                             </div>
 
                                <div class="form-group">
-                                   <label for="email2">Audio File</label>
-                                   <input type="file" class="form-control" id="email2" name="file" >
+                                   <label for="email2">Audio Link</label>
+                                   <input type="text" class="form-control" id="email2" placeholder="Enter Audio Link" name="link" >
                                    <small style="color:red; font-weight:500">
-                                       @error('file')
+                                       @error('link')
                                        {{$message}}
                                        @enderror
                                    </small>
@@ -35,7 +35,7 @@
 
                                <div class="form-group">
                                    <label for="email2">Audio Preacher</label>
-                                   <input type="text" class="form-control" id="email2" accept=".mp3" value="{{old('preacher')}}"  name="preacher" placeholder="Enter  Audio Preacher">
+                                   <input type="text" class="form-control" id="email2"  value="{{old('preacher')}}"  name="preacher" placeholder="Enter  Audio Preacher">
                                    <small style="color:red; font-weight:500">
                                        @error('preacher')
                                        {{$message}}
@@ -64,11 +64,10 @@
                     </div>
 
                 </div>
-
-
-                <div class="col-lg-7">
-
                 </div>
+
+
             </div>
+
 
 @endsection

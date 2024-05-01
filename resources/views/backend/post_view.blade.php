@@ -35,9 +35,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="email2">Post Content</label>
-                                <textarea rows="10" type="text" class="form-control" id="email2" required name="content" placeholder="Enter Post Content"></textarea>
+                                <textarea rows="10" id="myTextarea" class="form-control" id="email2"  name="body" placeholder="Enter Post Content"></textarea>
                                 <small style="color:red; font-weight:500">
-                                @error('content')
+                                @error('body')
                                 {{$message}}
                                 @enderror
                                 </small>
